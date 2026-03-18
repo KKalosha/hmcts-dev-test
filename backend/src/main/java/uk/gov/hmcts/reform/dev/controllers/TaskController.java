@@ -3,6 +3,7 @@ package uk.gov.hmcts.reform.dev.controllers;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.gov.hmcts.reform.dev.models.Task;
+import uk.gov.hmcts.reform.dev.dto.StatusUpdateRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,5 +38,17 @@ public class TaskController {
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         tasks.removeIf(t -> t.getId().equals(id));
         return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{id}/status")
+     public ResponseEntity<Task> updateTaskStatus(@PathVariable Long id, @RequestBody StatusUpdateRequest request) {
+        return tasks.stream()
+            .filter(t -> t.getId().equals(id))
+            .findFirst()
+            .map(task -> {
+                task.setStatus(request.getStatus());
+                return ResponseEntity.ok(task);
+            })
+            .orElse(ResponseEntity.notFound().build());
     }
 }
