@@ -3,22 +3,27 @@ import axios from 'axios';
 
 export default function (app: Application): void {
   app.get('/', async (req, res) => {
+    const now = new Date().toISOString().slice(0, 16);
+
     try {
-      // An example of connecting to the backend (a starting point)
       const response = await axios.get('http://localhost:4000/tasks');
       const tasks = response.data;
-      const now = new Date().toISOString().slice(0, 16);
+
       res.render('home', { tasks, now });
     } catch (error) {
       console.error('Error making request:', error);
-      res.render('home', {});
+
+      res.render('home', {
+        tasks: [],
+        now,
+      });
     }
   });
 
   app.post('/tasks', async (req, res) => {
-    try {
-      const { title, description, status, dueDate } = req.body;
+    const { title, description, status, dueDate } = req.body;
 
+    try {
       await axios.post('http://localhost:4000/tasks', {
         title,
         description,
@@ -29,7 +34,14 @@ export default function (app: Application): void {
       res.redirect('/');
     } catch (error) {
       console.error('Error creating task:', error);
-      res.redirect('/');
+
+      const now = new Date().toISOString().slice(0, 16);
+
+      res.render('home', {
+        tasks: [],
+        now,
+        errorMessage: 'Backend service is unavailable. Please ensure the backend server is running.',
+      });
     }
   });
 

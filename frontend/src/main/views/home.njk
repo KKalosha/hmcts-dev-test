@@ -7,6 +7,21 @@
 
 <h2 class="govuk-heading-m">Create task</h2>
 
+{% if errorMessage %}
+
+<div class="govuk-error-summary" data-module="govuk-error-summary">
+  <div role="alert">
+    <h2 class="govuk-error-summary__title">
+      There is a problem
+    </h2>
+    <div class="govuk-error-summary__body">
+      <p>{{ errorMessage }}</p>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
 <form method="post" action="/tasks" class="govuk-!-margin-bottom-8">
 
   <div class="govuk-form-group">
