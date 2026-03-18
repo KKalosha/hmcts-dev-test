@@ -32,4 +32,17 @@ export default function (app: Application): void {
       res.redirect('/');
     }
   });
+
+  app.post('/tasks/:id/delete', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await axios.delete(`http://localhost:4000/tasks/${id}`);
+
+    res.redirect('/');
+  } catch (error) {
+    console.error('Error deleting task:', error);
+    res.redirect('/');
+  }
+});
 }
