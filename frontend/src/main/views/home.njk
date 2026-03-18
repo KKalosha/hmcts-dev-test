@@ -94,7 +94,9 @@
 {% endif %}
 
 </td>
-<td class="govuk-table__cell">{{ task.dueDate }}</td>
+<td class="govuk-table__cell">
+  {{ task.dueDate | replace("T", " ") }}
+</td>
 <td class="govuk-table__cell">
 
   <form method="post" action="/tasks/{{ task.id }}/done" style="display:inline;">
