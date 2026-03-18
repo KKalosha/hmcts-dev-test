@@ -7,8 +7,8 @@ export default function (app: Application): void {
       // An example of connecting to the backend (a starting point)
       const response = await axios.get('http://localhost:4000/tasks');
       const tasks = response.data;
-
-      res.render('home', { tasks });
+      const now = new Date().toISOString().slice(0, 16);
+      res.render('home', { tasks, now });
     } catch (error) {
       console.error('Error making request:', error);
       res.render('home', {});

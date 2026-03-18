@@ -2,12 +2,24 @@ package uk.gov.hmcts.reform.dev.models;
 
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Future;
+
 public class Task {
 
     private Long id;
+
+    @NotBlank
     private String title;
+
     private String description;
+
+    @NotBlank
     private String status;
+
+    @NotNull
+    @Future
     private LocalDateTime dueDate;
 
     public Task(Long id, String title, String description, String status, LocalDateTime dueDate) {
@@ -21,8 +33,9 @@ public class Task {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
-      this.id = id;
+        this.id = id;
     }
 
     public String getTitle() {

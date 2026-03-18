@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import uk.gov.hmcts.reform.dev.models.Task;
 import uk.gov.hmcts.reform.dev.dto.StatusUpdateRequest;
 
+import jakarta.validation.Valid;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +21,12 @@ public class TaskController {
         return ResponseEntity.ok(tasks);
     }
 
-   @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Task task) {
-    task.setId((long) (tasks.size() + 1));
-    tasks.add(task);
-    return ResponseEntity.ok(task);
-}
+    @PostMapping
+    public ResponseEntity<Task> createTask(@Valid @RequestBody Task task) {
+        task.setId((long) (tasks.size() + 1));
+        tasks.add(task);
+        return ResponseEntity.ok(task);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTask(@PathVariable Long id) {
@@ -42,14 +44,17 @@ public class TaskController {
     }
 
     @PatchMapping("/{id}/status")
-     public ResponseEntity<Task> updateTaskStatus(@PathVariable Long id, @RequestBody StatusUpdateRequest request) {
+    public ResponseEntity<Task> updateTaskStatus(
+            @PathVariable Long id,
+            @RequestBody StatusUpdateRequest request) {
+
         return tasks.stream()
-            .filter(t -> t.getId().equals(id))
-            .findFirst()
-            .map(task -> {
-                task.setStatus(request.getStatus());
-                return ResponseEntity.ok(task);
-            })
-            .orElse(ResponseEntity.notFound().build());
+                .filter(t -> t.getId().equals(id))
+                .findFirst()
+                .map(task -> {
+                    task.setStatus(request.getStatus());
+                    return ResponseEntity.ok(task);
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 }
