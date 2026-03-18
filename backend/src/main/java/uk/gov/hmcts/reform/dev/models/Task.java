@@ -1,26 +1,32 @@
 package uk.gov.hmcts.reform.dev.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Future;
-
+@Entity
 public class Task {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Title is required")
     private String title;
 
     private String description;
 
-    @NotBlank
     private String status;
 
-    @NotNull
-    @Future
+    @Future(message = "Due date must be in the future")
     private LocalDateTime dueDate;
+
+    public Task() {
+    }
 
     public Task(Long id, String title, String description, String status, LocalDateTime dueDate) {
         this.id = id;
