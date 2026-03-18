@@ -14,4 +14,22 @@ export default function (app: Application): void {
       res.render('home', {});
     }
   });
+
+   app.post('/tasks', async (req, res) => {
+    try {
+      const { title, description, status, dueDate } = req.body;
+
+      await axios.post('http://localhost:4000/tasks', {
+        title,
+        description,
+        status,
+        dueDate
+      });
+
+      res.redirect('/');
+    } catch (error) {
+      console.error('Error creating task:', error);
+      res.redirect('/');
+    }
+  });
 }

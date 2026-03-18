@@ -5,6 +5,40 @@
 
 <h1 class="govuk-heading-xl">Welcome to your dev test!</h1>
 
+<h2 class="govuk-heading-m">Create task</h2>
+
+<form method="post" action="/tasks" class="govuk-!-margin-bottom-8">
+
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="title">Title</label>
+    <input class="govuk-input" id="title" name="title" type="text" required>
+  </div>
+
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="description">Description</label>
+    <textarea class="govuk-textarea" id="description" name="description"></textarea>
+  </div>
+
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="status">Status</label>
+    <select class="govuk-select" id="status" name="status">
+      <option value="TODO">TODO</option>
+      <option value="IN_PROGRESS">IN_PROGRESS</option>
+      <option value="DONE">DONE</option>
+    </select>
+  </div>
+
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="dueDate">Due date/time</label>
+    <input class="govuk-input" id="dueDate" name="dueDate" type="datetime-local" required>
+  </div>
+
+  <button class="govuk-button" data-module="govuk-button" type="submit">
+    Create task
+  </button>
+
+</form>
+
 <h2 class="govuk-heading-m">Tasks</h2>
 
 <table class="govuk-table">
