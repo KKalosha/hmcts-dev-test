@@ -65,11 +65,19 @@
 <td class="govuk-table__cell">{{ task.status }}</td>
 <td class="govuk-table__cell">{{ task.dueDate }}</td>
 <td class="govuk-table__cell">
- <form method="post" action="/tasks/{{ task.id }}/delete">
-  <button class="govuk-button govuk-button--warning" type="submit">
-    Delete
-  </button>
-</form>
+
+  <form method="post" action="/tasks/{{ task.id }}/done" style="display:inline;">
+    <button class="govuk-button govuk-button--secondary" type="submit">
+      Mark DONE
+    </button>
+  </form>
+
+  <form method="post" action="/tasks/{{ task.id }}/delete" style="display:inline;">
+    <button class="govuk-button govuk-button--warning" type="submit">
+      Delete
+    </button>
+  </form>
+
 </td>
 </tr>
 

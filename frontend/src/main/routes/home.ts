@@ -15,7 +15,7 @@ export default function (app: Application): void {
     }
   });
 
-   app.post('/tasks', async (req, res) => {
+  app.post('/tasks', async (req, res) => {
     try {
       const { title, description, status, dueDate } = req.body;
 
@@ -23,7 +23,7 @@ export default function (app: Application): void {
         title,
         description,
         status,
-        dueDate
+        dueDate,
       });
 
       res.redirect('/');
@@ -34,15 +34,30 @@ export default function (app: Application): void {
   });
 
   app.post('/tasks/:id/delete', async (req, res) => {
-  try {
-    const { id } = req.params;
+    try {
+      const { id } = req.params;
 
-    await axios.delete(`http://localhost:4000/tasks/${id}`);
+      await axios.delete(`http://localhost:4000/tasks/${id}`);
 
-    res.redirect('/');
-  } catch (error) {
-    console.error('Error deleting task:', error);
-    res.redirect('/');
-  }
-});
+      res.redirect('/');
+    } catch (error) {
+      console.error('Error deleting task:', error);
+      res.redirect('/');
+    }
+  });
+
+  app.post('/tasks/:id/done', async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      await axios.patch(`http://localhost:4000/tasks/${id}/status`, {
+        status: 'DONE',
+      });
+
+      res.redirect('/');
+    } catch (error) {
+      console.error('Error updating task status:', error);
+      res.redirect('/');
+    }
+  });
 }
