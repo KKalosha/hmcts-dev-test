@@ -62,7 +62,19 @@
 <td class="govuk-table__cell">{{ task.id }}</td>
 <td class="govuk-table__cell">{{ task.title }}</td>
 <td class="govuk-table__cell">{{ task.description }}</td>
-<td class="govuk-table__cell">{{ task.status }}</td>
+<td class="govuk-table__cell">
+
+{% if task.status == "DONE" %}
+<strong class="govuk-tag govuk-tag--green">DONE</strong>
+
+{% elif task.status == "IN_PROGRESS" %}
+<strong class="govuk-tag govuk-tag--blue">IN PROGRESS</strong>
+
+{% else %}
+<strong class="govuk-tag govuk-tag--grey">TODO</strong>
+{% endif %}
+
+</td>
 <td class="govuk-table__cell">{{ task.dueDate }}</td>
 <td class="govuk-table__cell">
 
